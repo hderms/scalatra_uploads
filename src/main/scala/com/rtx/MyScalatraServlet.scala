@@ -23,14 +23,11 @@ class MyScalatraServlet extends UploadsStack with FileUploadSupport {
   post("/upload") {
     val bucket: Bucket = s3.createBucket("unique-name-xxx")
     println(fileParams.get("file"))
+
     fileParams.get("file") match {
 
       case Some(file) =>
-        val tempFile: java.io.File = java.io.File.createTempFile("foo", "bar")
-        val fos: java.io.FileOutputStream = new java.io.FileOutputStream(tempFile);
-        fos.write(file.get());
-        fos.close();
-        bucket.put("sample.txt", tempFile)
+        s3.put(bucket=bucket, key="sample.txt", bytes= file.get(), metadata=s3.metadata(bucket, "sample.txt"))
           <html>
           <p>
           uploaded
