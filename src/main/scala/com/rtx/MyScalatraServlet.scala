@@ -23,7 +23,6 @@ class MyScalatraServlet extends UploadsStack with FileUploadSupport {
   post("/upload") {
     val bucket: Bucket = s3.createBucket("unique-name-xxx")
     println(fileParams.get("file"))
-
     fileParams.get("file") match {
 
       case Some(file) =>
